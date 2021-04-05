@@ -25,6 +25,9 @@ RequiredLayoutThemeObject:
 SpaceInsideBraces:
   enabled: true
 
+SpaceAroundFilterPipeline:
+  enabled: true
+
 SyntaxError:
   enabled: true
 
