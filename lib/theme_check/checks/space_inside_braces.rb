@@ -15,11 +15,20 @@ module ThemeCheck
       return if :assign == node.type_name
 
       outside_of_strings(node.markup) do |chunk|
-        chunk.scan(/([,:])  +/) do |_match|
+        chunk.scan(/([,:|])  +/) do |_match|
           add_offense("Too many spaces after '#{Regexp.last_match(1)}'", node: node, markup: Regexp.last_match(0))
         end
-        chunk.scan(/([,:])\S/) do |_match|
+        chunk.scan(/([,:|])\S/) do |_match|
           add_offense("Space missing after '#{Regexp.last_match(1)}'", node: node, markup: Regexp.last_match(0))
+        end
+        chunk.scan(/  ([|])+/) do |_match|
+          add_offense("Too many spaces before '#{Regexp.last_match(1)}'", node: node, markup: Regexp.last_match(0))
+        end
+        chunk.scan(/\S([|])+/) do |_match|
+          add_offense("Space missing before '#{Regexp.last_match(1)}'", node: node, markup: Regexp.last_match(0))
+        end
+        chunk.scan(/\A([|])+/) do |_match|
+          add_offense("Space missing before '#{Regexp.last_match(1)}'", node: node, markup: Regexp.last_match(0))
         end
       end
     end
